@@ -25,36 +25,36 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
 	if ($stmt->num_rows > 0) {
 		exit(header("Location: register.php?result=errorUsernameExists"));
 	} else {
-    if ($stmt = $con->prepare('INSERT INTO accounts (username, password, ip, email, rank) VALUES (?, ?, ?, ?, ?)')) {
-    	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		if ($stmt = $con->prepare('INSERT INTO accounts (username, password, ip, email, rank) VALUES (?, ?, ?, ?, ?)')) {
+			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			$defaultRank = 'user';
 			$ip = $_SERVER['REMOTE_ADDR'];
-      $stmt->bind_param('sssss', $_POST['username'], $password, $ip, $_POST['email'], $defaultRank);
-      $stmt->execute();
+			$stmt->bind_param('sssss', $_POST['username'], $password, $ip, $_POST['email'], $defaultRank);
+			$stmt->execute();
 
 
-// Copy default user images to new user
+			// Copy default user images to new user
 			$username = $_POST['username'];
 
-// 256
+			// 256
 			$file256 = 'uploads/default_256.png';
 			$newfile256 = "uploads/256_$username.png";
 			copy($file256, $newfile256);
 
-// 128
+			// 128
 			$file128 = 'uploads/default_128.png';
 			$newfile128 = "uploads/128_$username.png";
 			copy($file128, $newfile128);
-// 64
+			// 64
 			$file64 = 'uploads/default_64.png';
 			$newfile64 = "uploads/64_$username.png";
 			copy($file64, $newfile64);
 
 			exit(header("Location: login.php?result=success"));
-
-    } else {
+		} else {
 			exit(header("Location: register.php?result=errorRegisterGeneric"));
-    }	}
+		}
+	}
 	$stmt->close();
 } else {
 	exit(header("Location: register.php?result=errorRegisterGeneric"));

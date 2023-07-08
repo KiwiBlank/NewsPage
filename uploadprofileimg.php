@@ -154,4 +154,3 @@ if ($fileExt == "jpeg" || $fileExt == "jpg" || $fileExt == "png" || $fileExt == 
 	}
 	$imageProcess = 0;
 }
-?>

@@ -39,4 +39,3 @@ $con->close();
 header("Location: postnews.php?result=success");
 
 //header('Location: news.php');
-?>
